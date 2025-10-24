@@ -12,6 +12,18 @@ class SignUpPage extends StatefulWidget {
 
 class _SignUpPageState extends State<SignUpPage> {
   final formkey = GlobalKey<FormState>();
+  final namecontroller = TextEditingController();
+  final emailcontroller = TextEditingController();
+  final passwordcontroller = TextEditingController();
+
+
+@override
+  void dispose() {
+    namecontroller.dispose(); 
+    emailcontroller.dispose();
+    passwordcontroller.dispose();
+    super.dispose();
+  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
