@@ -10,6 +10,14 @@ class AuthField extends StatelessWidget {
       decoration: InputDecoration(
         hintText: hintText
       ),
+      validator: (value) {
+        if (value!.isEmpty) {
+          return "$hintText is misssing";
+        } else {
+          return null;
+        }
+      },
     );
+    
   }
 }
