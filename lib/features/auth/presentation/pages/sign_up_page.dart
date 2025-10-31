@@ -45,7 +45,7 @@ class _SignUpPageState extends State<SignUpPage> {
               SizedBox(height: 15),
               AuthField(hintText: "Password", controller: passwordcontroller,),
               SizedBox(height: 20),
-              AuthGradientButton(),
+              AuthGradientButton(buttonText: "Sign Up.",),
               SizedBox(height: 20),
               RichText(
                 text: TextSpan(
