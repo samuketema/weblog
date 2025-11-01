@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:weblog/core/theme/app_pallete.dart';
+import 'package:weblog/features/auth/presentation/pages/sign_up_page.dart';
 import 'package:weblog/features/auth/presentation/widgets/auth_field.dart';
 import 'package:weblog/features/auth/presentation/widgets/auth_gradient_button.dart';
 
 class SignInPage extends StatefulWidget {
+  static MaterialPageRoute route() => MaterialPageRoute(builder: (context)=>SignUpPage());
   const SignInPage({super.key});
 
   @override
@@ -25,6 +27,7 @@ class _SignInPageState extends State<SignInPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(),
       body: Form(
         key: formkey,
         child: Padding(
@@ -33,10 +36,9 @@ class _SignInPageState extends State<SignInPage> {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Text(
-                'Sign Up.',
+                'Sign In.',
                 style: TextStyle(fontSize: 40, fontWeight: FontWeight.bold),
               ),
-              SizedBox(height: 30),
               SizedBox(height: 15),
               AuthField(hintText: "Email", controller: emailcontroller),
               SizedBox(height: 15),
@@ -44,19 +46,24 @@ class _SignInPageState extends State<SignInPage> {
               SizedBox(height: 20),
               AuthGradientButton(buttonText: "Sign In.",),
               SizedBox(height: 20),
-              RichText(
-                text: TextSpan(
-                  text: 'Don\'t have an account? ',
-                  style: Theme.of(context).textTheme.titleMedium,
-                  children: [
-                    TextSpan(
-                      text: 'Sign Up',
-                      style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                        color: AppPallete.gradient2,
-                        fontWeight: FontWeight.bold,
+              GestureDetector(
+                onTap: () {
+                  Navigator.of(context).push(SignInPage.route());
+                },
+                child: RichText(
+                  text: TextSpan(
+                    text: 'Don\'t have an account? ',
+                    style: Theme.of(context).textTheme.titleMedium,
+                    children: [
+                      TextSpan(
+                        text: 'Sign Up',
+                        style: Theme.of(context).textTheme.titleMedium?.copyWith(
+                          color: AppPallete.gradient2,
+                          fontWeight: FontWeight.bold,
+                        ),
                       ),
-                    ),
-                  ],
+                    ],
+                  ),
                 ),
               ),
             ],
