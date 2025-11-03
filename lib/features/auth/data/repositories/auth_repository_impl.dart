@@ -1,8 +1,8 @@
-import 'package:fpdart/src/either.dart';
 import 'package:weblog/core/error/exceptions.dart';
 import 'package:weblog/core/error/failure.dart';
 import 'package:weblog/features/auth/data/dataSource/auth_remote_datasource.dart';
 import 'package:weblog/features/auth/domain/repositories/auth_repository.dart';
+import 'package:fpdart/fpdart.dart';
 
 class AuthRepositoryImpl implements AuthRepository {
   final AuthRemoteDatasource remoteDatasource;
