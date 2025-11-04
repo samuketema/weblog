@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:weblog/core/theme/app_pallete.dart';
+import 'package:weblog/features/auth/presentation/bloc/auth_bloc.dart';
 import 'package:weblog/features/auth/presentation/pages/sign_in_page.dart';
 import 'package:weblog/features/auth/presentation/widgets/auth_field.dart';
 import 'package:weblog/features/auth/presentation/widgets/auth_gradient_button.dart';
@@ -46,9 +48,26 @@ class _SignUpPageState extends State<SignUpPage> {
               SizedBox(height: 15),
               AuthField(hintText: "Email", controller: emailcontroller),
               SizedBox(height: 15),
-              AuthField(hintText: "Password", controller: passwordcontroller,isObscure: true,),
+              AuthField(
+                hintText: "Password",
+                controller: passwordcontroller,
+                isObscure: true,
+              ),
               SizedBox(height: 20),
-              AuthGradientButton(buttonText: "Sign Up."),
+              AuthGradientButton(
+                buttonText: "Sign Up.",
+                onPressed: () {
+                  if (formkey.currentState!.validate()) {
+                    final email = emailcontroller.text.trim();
+                    final password = passwordcontroller.text.trim();
+                    final name = namecontroller.text.trim();
+
+                    context.read<AuthBloc>().add(
+                      AuthSignUp(email: email, name: name, password: password),
+                    );
+                  }
+                },
+              ),
               SizedBox(height: 20),
               GestureDetector(
                 onTap: () {
