@@ -5,7 +5,8 @@ import 'package:weblog/features/auth/presentation/widgets/auth_field.dart';
 import 'package:weblog/features/auth/presentation/widgets/auth_gradient_button.dart';
 
 class SignInPage extends StatefulWidget {
-  static MaterialPageRoute route() => MaterialPageRoute(builder: (context)=>SignUpPage());
+  static MaterialPageRoute route() =>
+      MaterialPageRoute(builder: (context) => SignUpPage());
   const SignInPage({super.key});
 
   @override
@@ -44,7 +45,7 @@ class _SignInPageState extends State<SignInPage> {
               SizedBox(height: 15),
               AuthField(hintText: "Password", controller: passwordcontroller),
               SizedBox(height: 20),
-              AuthGradientButton(buttonText: "Sign In.",),
+              AuthGradientButton(buttonText: "Sign In.", onPressed: () {}),
               SizedBox(height: 20),
               GestureDetector(
                 onTap: () {
@@ -57,10 +58,11 @@ class _SignInPageState extends State<SignInPage> {
                     children: [
                       TextSpan(
                         text: 'Sign Up',
-                        style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                          color: AppPallete.gradient2,
-                          fontWeight: FontWeight.bold,
-                        ),
+                        style: Theme.of(context).textTheme.titleMedium
+                            ?.copyWith(
+                              color: AppPallete.gradient2,
+                              fontWeight: FontWeight.bold,
+                            ),
                       ),
                     ],
                   ),
