@@ -8,7 +8,7 @@ import 'package:weblog/init_dependencies.dart';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
-  initDependencies();
+ await initDependencies();
 
   runApp(
     MultiBlocProvider(
