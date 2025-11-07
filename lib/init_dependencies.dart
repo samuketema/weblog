@@ -10,13 +10,14 @@ import 'package:weblog/features/auth/presentation/bloc/auth_bloc.dart';
 final serviceLocator = GetIt.instance;
 
 Future<void> initDependencies() async {
-  _initAuth();
+  
   final supabase = await Supabase.initialize(
     anonKey: AppSecrets.anonKey,
     url: AppSecrets.url,
   );
 
   serviceLocator.registerLazySingleton(() => supabase.client);
+   _initAuth();
 }
 
 _initAuth() {
