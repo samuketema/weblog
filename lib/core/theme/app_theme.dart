@@ -20,5 +20,5 @@ class AppTheme {
       enabledBorder: _border(),
       focusedBorder: _border(AppPallete.gradient2),
     )
-  );
+  ); 
 }
