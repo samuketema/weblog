@@ -1,3 +1,4 @@
+import 'package:supabase_flutter/supabase_flutter.dart' as sb;
 import 'package:weblog/core/error/exceptions.dart';
 import 'package:weblog/core/error/failure.dart';
 import 'package:weblog/features/auth/data/dataSource/auth_remote_datasource.dart';
@@ -37,7 +38,11 @@ class AuthRepositoryImpl implements AuthRepository {
     try {
      final user = await fn();
       return right(user);
-    }on ServerException catch (e) {
+    }on sb.AuthException catch(e){
+      return left(Failure(e.message)); 
+    }
+    
+     on ServerException catch (e) {
       return left(Failure(e.message));
     }
      catch (e) {
