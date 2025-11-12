@@ -1,20 +1,23 @@
-import 'package:fpdart/src/either.dart';
+import 'package:fpdart/fpdart.dart';
 import 'package:weblog/core/error/failure.dart';
 import 'package:weblog/core/usecase/usecase.dart';
 import 'package:weblog/features/auth/domain/entities/user.dart';
+import 'package:weblog/features/auth/domain/repositories/auth_repository.dart';
 
-class UserLogin implements Usecase<User,UserLogInParams> {
+class UserSignIn implements Usecase<User,UaserSignInParams> {
+ final AuthRepository authRepository;
+  UserSignIn (this.authRepository);
   @override
-  Future<Either<Failure, dynamic>> call(Params) {
-    // TODO: implement call
-    throw UnimplementedError();
+  Future<Either<Failure, User>> call(UaserSignInParams Params) async {
+    return await authRepository.signInWithEmailPassword(
+      email: Params.email,  
+      password: Params.password,
+    );
   }
-  
 }
 
-class UserLogInParams{
+class UaserSignInParams{
   final String email;
   final String password;
-
-  UserLogInParams({required this.email, required this.password});
+  UaserSignInParams({required this.email, required this.password});
 }
