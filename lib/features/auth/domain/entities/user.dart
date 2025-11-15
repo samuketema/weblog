@@ -4,4 +4,7 @@ class User {
   final String id;
 
   User({required this.name, required this.email, required this.id});
-}
+
+   
+
+} 
