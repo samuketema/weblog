@@ -1,7 +1,7 @@
 import 'package:fpdart/fpdart.dart';
 import 'package:weblog/core/error/failure.dart';
 import 'package:weblog/core/usecase/usecase.dart';
-import 'package:weblog/features/auth/domain/entities/user.dart';
+import 'package:weblog/core/common/entities/user.dart';
 import 'package:weblog/features/auth/domain/repositories/auth_repository.dart';
 
 class CurrentUser implements Usecase<User,NoParams>{
