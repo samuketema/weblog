@@ -2,7 +2,7 @@ import 'package:supabase_flutter/supabase_flutter.dart' as sb;
 import 'package:weblog/core/error/exceptions.dart';
 import 'package:weblog/core/error/failure.dart';
 import 'package:weblog/features/auth/data/dataSource/auth_remote_datasource.dart';
-import 'package:weblog/features/auth/domain/entities/user.dart';
+import 'package:weblog/core/common/entities/user.dart';
 import 'package:weblog/features/auth/domain/repositories/auth_repository.dart';
 import 'package:fpdart/fpdart.dart';
 
