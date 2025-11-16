@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:weblog/core/common/app_user/cubit/app_user_cubit.dart';
 import 'package:weblog/core/theme/app_theme.dart';
 import 'package:weblog/features/auth/presentation/bloc/auth_bloc.dart';
 import 'package:weblog/features/auth/presentation/pages/sign_up_page.dart';
@@ -8,11 +9,14 @@ import 'package:weblog/init_dependencies.dart';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
- await initDependencies();
+  await initDependencies();
 
   runApp(
     MultiBlocProvider(
-      providers: [BlocProvider(create: (_) => serviceLocator<AuthBloc>())],
+      providers: [
+        BlocProvider(create: (_) => serviceLocator<AppUserCubit>()),
+        BlocProvider(create: (_) => serviceLocator<AuthBloc>()),
+      ],
       child: const MyApp(),
     ),
   );
@@ -28,15 +32,26 @@ class MyApp extends StatefulWidget {
 class _MyAppState extends State<MyApp> {
   @override
   void initState() {
-  context.read<AuthBloc>().add(AuthIsUserLoggedIn());
+    context.read<AuthBloc>().add(AuthIsUserLoggedIn());
   }
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'Blog App',
       theme: AppTheme.darktheme,
-      home: SignUpPage(),
+      home: BlocSelector<AppUserCubit, AppUserState, bool>(
+        selector: (state) {
+          return state is AppUserLoggedIn;
+        },
+        builder: (context, isLoggedIn) {
+          if (isLoggedIn) {
+            return Scaffold(body: Center(child: Text('Logged In')),);
+          }
+          return SignUpPage();
+        },
+      ),
     );
   }
 }
