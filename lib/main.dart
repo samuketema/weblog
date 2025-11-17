@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:weblog/blog/presentation/pages/blog_page.dart';
 import 'package:weblog/core/common/app_user/cubit/app_user_cubit.dart';
 import 'package:weblog/core/theme/app_theme.dart';
 import 'package:weblog/features/auth/presentation/bloc/auth_bloc.dart';
@@ -47,7 +48,7 @@ class _MyAppState extends State<MyApp> {
         },
         builder: (context, isLoggedIn) {
           if (isLoggedIn) {
-            return Scaffold(body: Center(child: Text('Logged In')),);
+            return BlogPage();
           }
           return SignUpPage();
         },
