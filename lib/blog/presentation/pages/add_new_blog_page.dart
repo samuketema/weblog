@@ -22,8 +22,11 @@ class _AddNewBlogPageState extends State<AddNewBlogPage> {
         child: Column(
           children: [
             DottedBorder(
-              options: RectDottedBorderOptions(
+              
+              options: RoundedRectDottedBorderOptions(
+                radius:Radius.circular(10),
                 color: AppPallete.borderColor,
+                strokeCap: StrokeCap.round,
                 dashPattern: [10,4]
               ),
               child: Container(
@@ -40,6 +43,22 @@ class _AddNewBlogPageState extends State<AddNewBlogPage> {
                 ),
               ),
             ),
+            const SizedBox(height: 20,),
+            SingleChildScrollView(
+              scrollDirection: Axis.horizontal,
+              child: Row(
+                children: [
+                  'Technology','Business','Programming','Entertainment',
+                ].map((e)=>Padding(
+                  padding: EdgeInsets.all(5),
+                  child: Chip(label: Text(e),
+                  side: BorderSide(
+                    color: AppPallete.borderColor
+                  ),),
+                ),
+                ).toList(),
+              ), 
+            )
           ],
         ),
       ),
