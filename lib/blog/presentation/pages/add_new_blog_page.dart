@@ -1,7 +1,10 @@
+import 'dart:io';
+
 import 'package:dotted_border/dotted_border.dart';
 import 'package:flutter/material.dart';
 import 'package:weblog/blog/presentation/widgets/blog_editor.dart';
 import 'package:weblog/core/theme/app_pallete.dart';
+import 'package:weblog/core/utils/image_picker.dart';
 
 class AddNewBlogPage extends StatefulWidget {
   static route() => MaterialPageRoute(builder: (context) => AddNewBlogPage());
@@ -14,7 +17,17 @@ class AddNewBlogPage extends StatefulWidget {
 class _AddNewBlogPageState extends State<AddNewBlogPage> {
   final  titleController = TextEditingController();
   final  contentController = TextEditingController();
-  final List selelctedTopics = [];
+  final List selectedTopics = [];
+  File? image;
+
+  void selectImage() async {
+    final pickedImage = await pickImage();
+    if (pickedImage != null) {
+      setState(() {
+        image = pickedImage;
+      });
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -25,62 +38,74 @@ class _AddNewBlogPageState extends State<AddNewBlogPage> {
       body: Padding(
         padding: const EdgeInsets.all(16.0),
         child: SingleChildScrollView(
-          child: GestureDetector(
-            child: Column(
-              children: [
-                DottedBorder(
-                  
-                  options: RoundedRectDottedBorderOptions(
-                    radius:Radius.circular(10),
-                    color: AppPallete.borderColor,
-                    strokeCap: StrokeCap.round,
-                    dashPattern: [10,4]
-                  ),
-                  child: Container(
-                    color: AppPallete.backgroundColor,
-                    height: 150,
-                    width: double.infinity,
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Icon(Icons.folder_open),
-                        SizedBox(height: 15),
-                        Text("Select your Image", style: TextStyle(fontSize: 15)),
-                      ],
-                    ),
-                  ),
-                ),
-                const SizedBox(height: 20,),
-                SingleChildScrollView(
-                  scrollDirection: Axis.horizontal,
-                  child: Row(
-                    children: [
-                      'Technology','Business','Programming','Entertainment',
-                    ].map((e)=>Padding(
-                      padding: EdgeInsets.all(5),
-                      child: GestureDetector(
-                        onTap: () {
-                          selelctedTopics.add(e);
-                        },
-                        child: Chip(label: Text(e),
-                        side: BorderSide(
-                          color: AppPallete.borderColor
-                        ),),
+          child: Column(
+                children: [
+                  image != null ? Image.file(image!) :
+                  GestureDetector(
+                    onTap: () {
+                      selectImage();
+                    },
+                    child: DottedBorder(
+                      options: RoundedRectDottedBorderOptions(
+                        radius:Radius.circular(10),
+                        color: AppPallete.borderColor,
+                        strokeCap: StrokeCap.round,
+                        dashPattern: [10,4]
+                      ),
+                      child: Container(
+                        color: AppPallete.backgroundColor,
+                        height: 150,
+                        width: double.infinity,
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Icon(Icons.folder_open),
+                            SizedBox(height: 15),
+                            Text("Select your Image", style: TextStyle(fontSize: 15)),
+                          ],
+                        ),
                       ),
                     ),
-                    ).toList(),
-                  ), 
-                ),
-                SizedBox(height: 10,),
-                BlogEditor(controller: titleController, hint: "Blog title"),
-                SizedBox(height: 10,),
-                BlogEditor(controller: contentController, hint: "Blog content")
-              ],
-               
-            ),
+                  ),
+                  const SizedBox(height: 20,),
+                  SingleChildScrollView(
+                    scrollDirection: Axis.horizontal,
+                    child: Row(
+                      children: [
+                        'Technology','Business','Programming','Entertainment',
+                      ].map((e)=>Padding(
+                        padding: EdgeInsets.all(5),
+                        child: GestureDetector(
+                          onTap: () {
+                            if (selectedTopics.contains(e)) {
+                                selectedTopics.remove(e);
+                              } else {
+                                selectedTopics.add(e);
+                              }
+                            setState(() {
+                              
+                            });
+                          },
+                          child: Chip(label: Text(e),
+                          color: selectedTopics.contains(e) ? WidgetStatePropertyAll(AppPallete.gradient1):null ,
+                          side:selectedTopics.contains(e) ?null : BorderSide(
+                            color: AppPallete.borderColor
+                          ),),
+                        ),
+                      ),
+                      ).toList(),
+                    ), 
+                  ),
+                  SizedBox(height: 10,),
+                  BlogEditor(controller: titleController, hint: "Blog title"),
+                  SizedBox(height: 10,),
+                  BlogEditor(controller: contentController, hint: "Blog content")
+                ],
+                 
+              ),
           ),
-        ),
-      ),
+          ),
+        
     );
   }
 }
