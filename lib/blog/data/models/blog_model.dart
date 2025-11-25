@@ -10,4 +10,34 @@ class BlogModel extends Blog {
     required super.topics,
     required super.updatedAt,
   });
+
+
+
+  // Convert Blog object to Map with snake_case keys
+  Map<String, dynamic> toJson() {
+    return {
+      'id': id,
+      'poster_id': posterId,
+      'title': title,
+      'content': content,
+      'image_url': imageUrl,
+      'topics': topics,
+      'updated_at': updatedAt.toIso8601String(),
+    };
+  }
+
+  // Create Blog object from Map with snake_case keys
+  factory BlogModel.fromJson(Map<String, dynamic> map) {
+    return BlogModel(
+      id: map['id'] as String,
+      posterId: map['poster_id'] as String,
+      title: map['title'] as String,
+      content: map['content'] as String,
+      imageUrl: map['image_url'] as String,
+      topics: List<String>.from(map['topics'] ?? []),
+      updatedAt:  map['updated_at'] == null? DateTime.now() : DateTime.parse(map['updated_at'] as String),
+    );
+  }
 }
+
+
