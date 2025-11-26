@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:weblog/blog/presentation/bloc/blog_bloc.dart';
 import 'package:weblog/blog/presentation/pages/blog_page.dart';
 import 'package:weblog/core/common/app_user/cubit/app_user_cubit.dart';
 import 'package:weblog/core/theme/app_theme.dart';
@@ -17,9 +18,10 @@ void main() async {
       providers: [
         BlocProvider(create: (_) => serviceLocator<AppUserCubit>()),
         BlocProvider(create: (_) => serviceLocator<AuthBloc>()),
+        BlocProvider(create: (_) => serviceLocator<BlogBloc>()),
       ],
       child: const MyApp(),
-    ),
+    ), 
   );
 }
 
@@ -33,6 +35,7 @@ class MyApp extends StatefulWidget {
 class _MyAppState extends State<MyApp> {
   @override
   void initState() {
+    super.initState();
     context.read<AuthBloc>().add(AuthIsUserLoggedIn());
   }
 
