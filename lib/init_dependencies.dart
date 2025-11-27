@@ -3,6 +3,7 @@ import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:weblog/blog/data/datasources/blog_remote_data_source.dart';
 import 'package:weblog/blog/data/repositories/blog_repository_impl.dart';
 import 'package:weblog/blog/domain/repository/blog_repositroy.dart';
+import 'package:weblog/blog/domain/usecases/get_all_blogs.dart';
 import 'package:weblog/blog/domain/usecases/upload_blog.dart';
 import 'package:weblog/blog/presentation/bloc/blog_bloc.dart';
 import 'package:weblog/core/common/app_user/cubit/app_user_cubit.dart';
@@ -62,5 +63,6 @@ void _initblog() {
       () => BlogRepositoryImpl(blogRemoteDataSource: serviceLocator()),
     )
     ..registerFactory(() => UploadBlog(blogRepositroy: serviceLocator()))
-    ..registerLazySingleton(() => BlogBloc(serviceLocator()));
+    ..registerFactory(() => GetAllBlogs(blogRepositroy: serviceLocator()))
+    ..registerLazySingleton(() =>BlogBloc(uploadBlog: serviceLocator(), getAllBlogs: serviceLocator()));
 }
