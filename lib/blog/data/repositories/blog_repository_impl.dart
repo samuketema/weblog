@@ -26,7 +26,7 @@ class BlogRepositoryImpl implements BlogRepositroy {
         posterId: posterId,
         title: title,
         content: content,
-        imageUrl: ' ',
+        imageUrl: '',
         topics: topics,
         updatedAt: DateTime.now(),
       );
@@ -35,11 +35,21 @@ class BlogRepositoryImpl implements BlogRepositroy {
         blog: blogModel,
       );
 
-      blogModel.copyWith(imageUrl: imageUrl);
+      blogModel = blogModel.copyWith(imageUrl: imageUrl);
       final uploadedBlog = await blogRemoteDataSource.uploadBlog(blogModel);
       return right(uploadedBlog);
     } on ServerException catch (e) {
       return left(Failure(e.message));
     }
+  }
+  
+  @override
+  Future<Either<Failure, List<Blog>>> getAllBlogs() async {
+   try {
+     final blogs = await blogRemoteDataSource.getAllBlogs();
+     return right(blogs);
+   }on ServerException catch (e) {
+     return Left(Failure(e.message));
+   }
   }
 }
