@@ -11,9 +11,26 @@ pluginManagement {
     includeBuild("$flutterSdkPath/packages/flutter_tools/gradle")
 
     repositories {
+        // 🔧 FIX: Flutter mirrors so plugin dependencies can download
+        maven { url = uri("https://mirrors.tuna.tsinghua.edu.cn/flutter/download.flutter.io") }
+        maven { url = uri("https://flutter.dev.storage.sjtug.sjtu.edu.cn") }
+
         google()
         mavenCentral()
         gradlePluginPortal()
+    }
+}
+
+dependencyResolutionManagement {
+    repositoriesMode.set(RepositoriesMode.PREFER_SETTINGS)
+
+    repositories {
+        // 🔧 FIX: Same mirrors for project-level dependencies
+        maven { url = uri("https://mirrors.tuna.tsinghua.edu.cn/flutter/download.flutter.io") }
+        maven { url = uri("https://flutter.dev.storage.sjtug.sjtu.edu.cn") }
+
+        google()
+        mavenCentral()
     }
 }
 
