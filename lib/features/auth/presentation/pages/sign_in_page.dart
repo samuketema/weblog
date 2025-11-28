@@ -7,6 +7,7 @@ import 'package:weblog/features/auth/presentation/bloc/auth_bloc.dart';
 import 'package:weblog/features/auth/presentation/pages/sign_up_page.dart';
 import 'package:weblog/features/auth/presentation/widgets/auth_field.dart';
 import 'package:weblog/features/auth/presentation/widgets/auth_gradient_button.dart';
+import 'package:weblog/features/blog/presentation/pages/blog_page.dart';
 
 class SignInPage extends StatefulWidget {
   static MaterialPageRoute route() =>
@@ -37,6 +38,8 @@ class _SignInPageState extends State<SignInPage> {
         listener: (context, state) {
          if (state is AuthFailure) {
            return showSnakbar(context, state.message);
+         } else if(state is AuthSuccess){
+          Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute(builder: (context) => BlogPage()), (Route route) => false);
          }
         },
         builder: (context, state) {
