@@ -11,7 +11,8 @@ import 'package:weblog/features/blog/presentation/pages/blog_page.dart';
 
 class SignUpPage extends StatefulWidget {
   static MaterialPageRoute route() =>
-      MaterialPageRoute(builder: (context) => SignInPage());
+      MaterialPageRoute(builder: (context) => const SignUpPage());
+  
   const SignUpPage({super.key});
 
   @override
@@ -35,80 +36,205 @@ class _SignUpPageState extends State<SignUpPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: AppPallete.backgroundColor,
       body: BlocConsumer<AuthBloc, AuthState>(
         listener: (context, state) {
-         if(state is AuthFailure){
-          showSnakbar(context, state.message);
-         }else if(state is AuthSuccess){
-          Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute(builder: (context) => BlogPage()), (Route route) => false);
-         }
+          if (state is AuthFailure) {
+            showSnakbar(context, state.message);
+          } else if (state is AuthSuccess) {
+            Navigator.of(context).pushAndRemoveUntil(
+              MaterialPageRoute(builder: (context) => const BlogPage()),
+              (Route route) => false,
+            );
+          }
         },
         builder: (context, state) {
-          if(state is AuthLoading){
-            return Loader();
+          if (state is AuthLoading) {
+            return const Loader();
           }
-          return Form(
-              key: formkey, 
-              child: Padding(
-                padding: EdgeInsets.all(10),
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Text(
-                      'Sign Up.',
-                      style: TextStyle(fontSize: 40, fontWeight: FontWeight.bold),
-                    ),
-                    SizedBox(height: 30),
-                    AuthField(hintText: "Name", controller: namecontroller),
-                    SizedBox(height: 15),
-                    AuthField(hintText: "Email", controller: emailcontroller),
-                    SizedBox(height: 15),
-                    AuthField(
-                      hintText: "Password",
-                      controller: passwordcontroller,
-                      isObscure: true,
-                    ),
-                    SizedBox(height: 20),
-                    AuthGradientButton(
-                      buttonText: "Sign Up.",
-                      onPressed: () {
-                        if (formkey.currentState!.validate()) {
-                          final email = emailcontroller.text.trim();
-                          final password = passwordcontroller.text.trim();
-                          final name = namecontroller.text.trim();
-      
-                          context.read<AuthBloc>().add(
-                            AuthSignUp(email: email, name: name, password: password),
-                          );
-                        }
-                      },
-                    ),
-                    SizedBox(height: 20),
-                    GestureDetector(
-                      onTap: () {
-                        Navigator.of(context).push(SignUpPage.route());
-                      },
-                      child: RichText(
-                        text: TextSpan(
-                          text: 'Already have an account? ',
-                          style: Theme.of(context).textTheme.titleMedium,
-                          children: [
-                            TextSpan(
-                              text: 'Sign In',
-                              style: Theme.of(context).textTheme.titleMedium
-                                  ?.copyWith(
-                                    color: AppPallete.gradient2,
-                                    fontWeight: FontWeight.bold,
-                                  ),
+          return SingleChildScrollView(
+            child: ConstrainedBox(
+              constraints: BoxConstraints(
+                minHeight: MediaQuery.of(context).size.height,
+              ),
+              child: SafeArea(
+                child: Padding(
+                  padding: const EdgeInsets.all(24.0),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      // Header Section
+                      Column(
+                        children: [
+                          Container(
+                            padding: const EdgeInsets.all(16),
+                            decoration: BoxDecoration(
+                              gradient: AppPallete.mainGradient,
+                              shape: BoxShape.circle,
                             ),
-                          ],
+                            child: const Icon(
+                              Icons.person_add_rounded,
+                              size: 40,
+                              color: AppPallete.whiteColor,
+                            ),
+                          ),
+                          const SizedBox(height: 24),
+                          Text(
+                            'Create Account',
+                            style: TextStyle(
+                              fontSize: 32,
+                              fontWeight: FontWeight.bold,
+                              color: AppPallete.textPrimary,
+                              letterSpacing: -0.5,
+                            ),
+                          ),
+                          const SizedBox(height: 8),
+                          Text(
+                            'Join us and start your blogging journey',
+                            style: TextStyle(
+                              fontSize: 16,
+                              color: AppPallete.textSecondary,
+                            ),
+                          ),
+                        ],
+                      ),
+                      
+                      const SizedBox(height: 40),
+                      
+                      // Form Section
+                      Container(
+                        padding: const EdgeInsets.all(24),
+                        decoration: BoxDecoration(
+                          color: AppPallete.backgroundLight,
+                          borderRadius: BorderRadius.circular(16),
+                          border: Border.all(
+                            color: AppPallete.borderColor,
+                            width: 1,
+                          ),
+                        ),
+                        child: Form(
+                          key: formkey,
+                          child: Column(
+                            children: [
+                              AuthField(
+                                hintText: "Full Name",
+                                controller: namecontroller,
+                              ),
+                              const SizedBox(height: 16),
+                              AuthField(
+                                hintText: "Email",
+                                controller: emailcontroller,
+                              ),
+                              const SizedBox(height: 16),
+                              AuthField(
+                                hintText: "Password",
+                                controller: passwordcontroller,
+                                isObscure: true,
+                              ),
+                              const SizedBox(height: 24),
+                              AuthGradientButton(
+                                buttonText: "Create Account",
+                                onPressed: () {
+                                  if (formkey.currentState!.validate()) {
+                                    final email = emailcontroller.text.trim();
+                                    final password = passwordcontroller.text.trim();
+                                    final name = namecontroller.text.trim();
+
+                                    context.read<AuthBloc>().add(
+                                      AuthSignUp(
+                                        email: email,
+                                        name: name,
+                                        password: password,
+                                      ),
+                                    );
+                                  }
+                                },
+                              ),
+                            ],
+                          ),
                         ),
                       ),
-                    ),
-                  ],
+                      
+                      const SizedBox(height: 24),
+                      
+                      // Terms and Conditions
+                      Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 16.0),
+                        child: Text(
+                          'By creating an account, you agree to our Terms of Service and Privacy Policy',
+                          style: TextStyle(
+                            fontSize: 12,
+                            color: AppPallete.textSecondary,
+                            height: 1.4,
+                          ),
+                          textAlign: TextAlign.center,
+                        ),
+                      ),
+                      
+                      const SizedBox(height: 32),
+                      
+                      // Divider
+                      Row(
+                        children: [
+                          Expanded(
+                            child: Divider(
+                              color: AppPallete.borderLight,
+                              thickness: 1,
+                            ),
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.symmetric(horizontal: 16),
+                            child: Text(
+                              'OR',
+                              style: TextStyle(
+                                color: AppPallete.textSecondary,
+                                fontWeight: FontWeight.w500,
+                              ),
+                            ),
+                          ),
+                          Expanded(
+                            child: Divider(
+                              color: AppPallete.borderLight,
+                              thickness: 1,
+                            ),
+                          ),
+                        ],
+                      ),
+                      
+                      const SizedBox(height: 24),
+                      
+                      // Sign In Redirect
+                      GestureDetector(
+                        onTap: () {
+                          Navigator.of(context).push(SignInPage.route());
+                        },
+                        child: RichText(
+                          text: TextSpan(
+                            text: 'Already have an account? ',
+                            style: TextStyle(
+                              fontSize: 16,
+                              color: AppPallete.textSecondary,
+                            ),
+                            children: [
+                              TextSpan(
+                                text: 'Sign In',
+                                style: TextStyle(
+                                  fontSize: 16,
+                                  color: AppPallete.gradient2,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
                 ),
               ),
-            );
+            ),
+          );
         },
       ),
     );

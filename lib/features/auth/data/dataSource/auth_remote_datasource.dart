@@ -1,7 +1,5 @@
-import 'package:fpdart/fpdart.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:weblog/core/error/exceptions.dart';
-import 'package:weblog/core/error/failure.dart';
 import 'package:weblog/features/auth/data/model/user_model.dart';
 
 abstract interface class AuthRemoteDatasource {
