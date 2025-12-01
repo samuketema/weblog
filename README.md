@@ -94,10 +94,10 @@ flutter build apk --release
 ## Screenshots
 
 ### Signup Page
-![Signup Page](assets/screenshots/signuppage.png)
+![Signup Page](assets/screenshots/signup.png)
 
 ### Login Page
-![Login Page](assets/screenshots/signinpage.png)
+![Login Page](assets/screenshots/signin.png)
 
 ### Home Page
 ![Home Page](assets/screenshots/homepage.png)
